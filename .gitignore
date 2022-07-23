@@ -142,3 +142,4 @@ cython_debug/
 *.?sv
 *.xls?
 *.db
+/date-schema/files/bank-holidays.json

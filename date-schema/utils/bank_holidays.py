@@ -1,23 +1,39 @@
-"""Grab the UK Bank Holidays from the Government API"""
+"""Parse the UK Bank Holidays from the UK Government API."""
 import json
 
 import requests
 import pandas as pd
 
 
-class BankHolidays(object):
-    def __init__(self):
-        self.bank_holiday_frame = pd.DataFrame(columns=['country', 'title', 'date', 'notes', 'bunting'])
-        self.get_uk_bank_holidays()
+class BankHolidays:
+    def __init__(self, connect_on_init: bool = True):
+        self.bank_holiday_frame = pd.DataFrame(columns=['division', 'title', 'date', 'notes', 'bunting'])
+        if connect_on_init:
+            self.set_bank_holiday_frame()
 
-    def get_uk_bank_holidays(self):
-        """Get the UK bank holidays from the UK government website"""
-        uk_bank_holidays = json.loads(
+    @staticmethod
+    def get_uk_bank_holidays() -> dict:
+        """Return the UK bank holidays from the UK government website as a dict."""
+        return json.loads(
             requests.request(
                 'GET',
                 'https://www.gov.uk/bank-holidays.json'
             ).text
         )
-        uk_bank_holidays_df = pd.DataFrame.from_dict(uk_bank_holidays['england-and-wales']['events'])
-        uk_bank_holidays_df.loc[:, 'country'] = 'UK'
-        self.bank_holiday_frame = pd.concat([self.bank_holiday_frame, uk_bank_holidays_df])
+
+    def _parse_bank_holiday_division(self, division: str) -> pd.DataFrame:
+        """Parse the specified division into a pandas dataframe."""
+        return (
+            pd.DataFrame
+                .from_dict(self.get_uk_bank_holidays()[division]['events'])
+                .assign(division=division)
+        )
+
+    def set_bank_holiday_frame(self) -> None:
+        """Convert the UK bank holidays into a pandas dataframe."""
+        self.bank_holiday_frame = pd.concat(
+            [
+                self.bank_holiday_frame,
+                *[self._parse_bank_holiday_division(div) for div in self.get_uk_bank_holidays()]
+            ]
+        )
