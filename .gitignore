@@ -139,7 +139,12 @@ dmypy.json
 cython_debug/
 
 # Data files
+*.zip
 *.?sv
 *.xls?
+*.json
 *.db
-/date-schema/files/bank-holidays.json
+*.txt
+
+# Exceptions
+!/geography-schema/files/simplemaps_worldcities_basicv1.75/license.txt
