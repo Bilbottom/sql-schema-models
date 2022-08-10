@@ -7,7 +7,7 @@ import pandas as pd
 class DateDimension(object):
     def __init__(self, start: str, end: str):
         def is_string_iso_8601(string: str) -> bool:
-            return re.match(r'\d{4}-\d{2}-\d{2}', string=string) is not None
+            return re.match(r'^\d{4}-\d{2}-\d{2}$', string=string) is not None
 
         if not is_string_iso_8601(start):
             raise ValueError(f'`start` must be a valid date in ISO-8601 format. {start} is invalid')
@@ -62,6 +62,7 @@ class DateDimension(object):
         self.date_frame.loc[:, 'is_day_weekday'] = \
             self.date_frame.loc[:, 'day_name_abbr'].apply(lambda s: s not in ['Sun', 'Sat'])
 
+        # noinspection PyUnresolvedReferences
         self.date_frame.loc[:, 'week_number_iso'] = self.date_frame.index.isocalendar()['week']
 
         # To match `dbo.date_dimension_table` -- use '%W' for Monday start of week
@@ -70,16 +71,19 @@ class DateDimension(object):
 
     def _add_period_ids(self) -> None:
         self.date_frame.loc[:, 'period_id'] = (
-              self.date_frame['year_number'].astype(str).str.zfill(4)
+            0
+            + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['month_number'].astype(str).str.zfill(2)
             + self.date_frame['day_number'].astype(str).str.zfill(2)
         ).astype(int)
         self.date_frame.loc[:, 'month_year'] = (
-              self.date_frame['year_number'].astype(str).str.zfill(4)
+            0
+            + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['month_number'].astype(str).str.zfill(2)
         ).astype(int)
         self.date_frame.loc[:, 'ordinal_date'] = (
-              self.date_frame['year_number'].astype(str).str.zfill(4)
+            0
+            + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['year_day_number'].astype(str).str.zfill(3)
         ).astype(int)
 
