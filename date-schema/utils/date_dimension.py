@@ -71,18 +71,18 @@ class DateDimension(object):
 
     def _add_period_ids(self) -> None:
         self.date_frame.loc[:, 'period_id'] = (
-            0
+            ''
             + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['month_number'].astype(str).str.zfill(2)
             + self.date_frame['day_number'].astype(str).str.zfill(2)
         ).astype(int)
         self.date_frame.loc[:, 'month_year'] = (
-            0
+            ''
             + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['month_number'].astype(str).str.zfill(2)
         ).astype(int)
         self.date_frame.loc[:, 'ordinal_date'] = (
-            0
+            ''
             + self.date_frame['year_number'].astype(str).str.zfill(4)
             + self.date_frame['year_day_number'].astype(str).str.zfill(3)
         ).astype(int)

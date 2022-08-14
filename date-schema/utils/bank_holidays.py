@@ -7,9 +7,13 @@ import pandas as pd
 
 class BankHolidays:
     def __init__(self, connect_on_init: bool = True):
-        self.bank_holiday_frame = pd.DataFrame(columns=['division', 'title', 'date', 'notes', 'bunting'])
+        self._bank_holiday_frame = pd.DataFrame(columns=['division', 'title', 'date', 'notes', 'bunting'])
         if connect_on_init:
             self.set_bank_holiday_frame()
+
+    @property
+    def bank_holiday_frame(self):
+        return self._bank_holiday_frame.rename({'date': 'full_date'}, axis='columns')
 
     @staticmethod
     def get_uk_bank_holidays() -> dict:
@@ -31,7 +35,7 @@ class BankHolidays:
 
     def set_bank_holiday_frame(self) -> None:
         """Convert the UK bank holidays into a pandas dataframe."""
-        self.bank_holiday_frame = pd.concat(
+        self._bank_holiday_frame = pd.concat(
             [
                 self.bank_holiday_frame,
                 *[self._parse_bank_holiday_division(div) for div in self.get_uk_bank_holidays()]
