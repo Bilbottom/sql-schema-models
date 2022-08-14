@@ -146,5 +146,11 @@ cython_debug/
 *.db
 *.txt
 
+# IDEA Files
+/.idea/dataSources.xml
+/.idea/misc.xml
+/.idea/SQL-Schema-Models.iml
+
+
 # Exceptions
 !/geography-schema/files/simplemaps_worldcities_basicv1.75/license.txt
