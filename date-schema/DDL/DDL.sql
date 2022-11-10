@@ -96,3 +96,30 @@ CREATE TABLE bank_holidays(
     bunting   BOOLEAN NOT NULL,
     PRIMARY KEY(division, full_date)
 );
+
+
+CREATE TABLE daylight_savings(
+    region             TEXT NOT NULL,  /* This may change -- but for now, will stick to the UK/EU */
+    year_number        INTEGER NOT NULL REFERENCES dates(year_number),
+    dst_start_time_utc DATETIME NOT NULL,
+    dst_end_time_utc   DATETIME NOT NULL,
+    PRIMARY KEY(region, year_number)
+);
+/*
+In the UK:
+* DST starts on the last Sunday in March at 01:00 UTC
+* DST end on the last Sunday in October at 01:00 UTC
+Between these dates and times, the time in the UK is UTC +1 hour
+
+For example, in 2022:
+* When local standard time was about to reach
+    Sunday, 27 March 2022, 01:00:00 clocks were turned forward 1 hour to
+    Sunday, 27 March 2022, 02:00:00 local daylight time instead.
+* When local daylight time was about to reach
+    Sunday, 30 October 2022, 02:00:00 clocks were turned backward 1 hour to
+    Sunday, 30 October 2022, 01:00:00 local standard time instead.
+
+Sources:
+    * https://en.wikipedia.org/wiki/Daylight_saving_time_by_country
+    * https://www.timeanddate.com/time/change/uk
+*/
