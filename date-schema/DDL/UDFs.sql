@@ -24,7 +24,7 @@ WITH
             ) AS part_1,  /* Working minutes on first day */
             (
                 SELECT COUNT(*)
-                FROM dates
+                FROM calendar
                 WHERE day_name NOT IN ('Saturday', 'Sunday')
                   AND full_date > DATE(from_date)
                   AND full_date < DATE(to_date)

@@ -1,7 +1,7 @@
 
 PRAGMA FOREIGN_KEYS = OFF;
 
-DROP TABLE IF EXISTS dates;
+DROP TABLE IF EXISTS calendar;
 DROP TABLE IF EXISTS bank_holidays;
 
 
@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS bank_holidays;
 
 PRAGMA FOREIGN_KEYS = ON;
 
-CREATE TABLE dates(
+CREATE TABLE calendar(
     full_date                DATE NOT NULL PRIMARY KEY,
     period_id                INTEGER NOT NULL UNIQUE,
     julian_date              REAL NOT NULL UNIQUE,
@@ -91,7 +91,7 @@ CREATE TABLE dates(
 CREATE TABLE bank_holidays(
     division  TEXT NOT NULL,
     title     TEXT NOT NULL,
-    full_date TEXT NOT NULL REFERENCES dates(full_date),
+    full_date TEXT NOT NULL REFERENCES calendar(full_date),
     notes     TEXT NOT NULL,
     bunting   BOOLEAN NOT NULL,
     PRIMARY KEY(division, full_date)
