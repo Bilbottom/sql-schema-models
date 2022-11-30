@@ -147,9 +147,7 @@ cython_debug/
 *.txt
 
 # IDEA Files
-/.idea/dataSources.xml
-/.idea/misc.xml
-/.idea/SQL-Schema-Models.iml
+.idea
 
 
 # Exceptions
