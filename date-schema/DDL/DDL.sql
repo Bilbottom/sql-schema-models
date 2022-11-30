@@ -100,7 +100,7 @@ CREATE TABLE bank_holidays(
 
 CREATE TABLE daylight_savings(
     region             TEXT NOT NULL,  /* This may change -- but for now, will stick to the UK/EU */
-    year_number        INTEGER NOT NULL REFERENCES dates(year_number),
+    year_number        INTEGER NOT NULL REFERENCES calendar(year_number),
     dst_start_time_utc DATETIME NOT NULL,
     dst_end_time_utc   DATETIME NOT NULL,
     PRIMARY KEY(region, year_number)
