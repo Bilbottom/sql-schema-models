@@ -45,9 +45,9 @@ class Transaction(Base):
                f")>"
 
     def set_value_and_count(self):
-        self.transaction_value = sum([item.item_value for item in self.items])
+        self.transaction_value = sum(item.item_value for item in self.items)
         self.transaction_item_count = len(self.items)
-        payment_values = sum([payment.payment_value for payment in self.payments])
+        payment_values = sum(payment.payment_value for payment in self.payments)
         if payment_values != self.transaction_value:
             raise ValueError(
                 f'The transaction_value {self.transaction_value} does not equal '
