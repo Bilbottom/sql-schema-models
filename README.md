@@ -1,16 +1,20 @@
-sql-schema-models
----
+# SQL Schema Models
 
-Various files to create stand-alone SQL schemas that can be utilised in larger data models.
+Stand-alone SQL models to enhance larger data models.
 
 
-# Date Schema
+## Date Dimensions
 
 Almost all data models can be improved by adding a calendar table which has dates over a range with useful info and such, such as weekday names.
 
 This model extends this by including holidays and additional columns.
 
 
-# Geography Schema
+## Geography
 
 Countries and cities.
+
+
+## Loans
+
+Simple loan and customer tables.
